@@ -24,3 +24,26 @@ jobs:
       # specify any bash command here prefixed with `run: `
       - run: go get -v -t -d ./...
       - run: go test -v ./...
+  deploy:
+    docker:
+      # specify the version
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - run:
+          name: Make package
+          command: make build
+      - run:
+          name: Deploy aws lambda
+          command: make deploy
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
