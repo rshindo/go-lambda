@@ -2,6 +2,7 @@
 
 build: gomodgen
 	export GO111MODULE=on
+	go get -v -t -d ./...
 	env GOOS=linux go build -ldflags="-s -w" -o bin/hello cmd/main.go
 
 clean:
