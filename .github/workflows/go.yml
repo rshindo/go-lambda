@@ -31,3 +31,9 @@ jobs:
     
     - name: Packaging
       run: go build -o bin/hello cmd/main.go
+    
+    - name: Archive
+      uses: actions/upload-artifact@v1
+      with:
+        name: bin
+        path: bin/hello
